@@ -1,0 +1,40 @@
+server:
+  port: 8080
+
+spring:
+  cloud:
+    function:
+      definition: input1;input2;input3
+    stream:
+      bindings:
+        input1-in-0:
+          destination: somequeue
+          group: group1
+          binder: local_rabbit
+          consumer:
+            concurrency: 10
+            max-attempts: 3
+        input2-in-0:
+          destination: somequeue
+          group: group2
+          binder: local_rabbit
+          consumer:
+            concurrency: 10
+            max-attempts: 3
+        input3-in-0:
+          destination: somequeue
+          group: group3
+          binder: local_rabbit
+          consumer:
+            concurrency: 10
+            max-attempts: 3
+      binders:
+        local_rabbit:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: localhost
+                port: 5672
+                username: guest
+                password: guest
